@@ -25,15 +25,13 @@ def insert():
 @app.route('/update', methods=["POST"])
 def update():
     form = request.form.to_dict()
-    employee = Employees(
-        name=form['name'],
-        email=form['email'],
-        phone=form['phone']
-    )
-    db.session.add(employee)
+    res = Employees.query.get(form['id'])
+    res.name = form['name']
+    res.email = form['email']
+    res.phone = form['phone']
+    db.session.add(res)
     db.session.commit()
     return redirect('/')
-
 
 
 @app.route('/delete/<emp_id>')
